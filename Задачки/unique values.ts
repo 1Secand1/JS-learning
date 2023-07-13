@@ -1,3 +1,5 @@
+//убрать из масива все пары значений
+// [1, 1, 2, 2, 3] => 3
 const muArr: number[] = [1, 1, 2, 2, 3];
 
 function getUniqueValues([...arr]: number[]): number[] {
