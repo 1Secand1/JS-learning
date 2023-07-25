@@ -1,4 +1,23 @@
 /*
+Скопирован ли массив?
+
+Что выведет следующий код?
+
+*/
+if (0) {
+  let fruits = ["Яблоки", "Груша", "Апельсин"];
+
+  // добавляем новое значение в "копию"
+  let shoppingCart = fruits;
+  shoppingCart.push("Банан");
+
+  // что в fruits?
+  alert(fruits.length); // ?
+}
+
+//ОТВЕТ: В фрутс добавится значение Банан так как произошло не глубокое копирование
+
+/*
 
   Давайте произведём 5 операций с массивом.
 
@@ -26,6 +45,60 @@ styles.unshift("Регги", "Рэп");
 /***********************************************/
 
 /*
+Каков результат? Почему?
+*/
+
+if (0) {
+  let arr = ["a", "b"];
+
+  arr.push(function () {
+    console.log(this);
+  });
+
+  arr[2](); // ?
+}
+
+// ОТВЕТ: выведется значение переменной arr, тоесть весь масив целикомц
+
+/***********************************************/
+
+/*
+  Напишите функцию sumInput(), которая:
+  
+  Просит пользователя ввести значения, используя prompt и сохраняет их в массив.
+  Заканчивает запрашивать значения, когда пользователь введёт не числовое значение, пустую строку или нажмёт «Отмена».
+  Подсчитывает и возвращает сумму элементов массива.
+  P.S. Ноль 0 – считается числом, не останавливайте ввод значений при вводе «0».
+*/
+
+function sumInput() {
+  let userNumber;
+  let sumNumber;
+
+  while (true) {
+    userNumber = prompt("В видите число", 0);
+
+    if (userNumber == null || isNaN(userNumber)) {
+      alert(sumNumber);
+      break;
+    }
+
+    if (userNumber === "") {
+      alert("Поле должно быть заполненым");
+      continue;
+    }
+
+    if (!isNaN(userNumber)) {
+      sumNumber += +userNumber;
+      continue;
+    }
+  }
+  return sumNumber;
+}
+
+/***********************************************/
+
+/*
 
   На входе массив чисел, например: arr = [1, -2, 3, 4, -9, 6].
 
@@ -46,3 +119,76 @@ styles.unshift("Регги", "Рэп");
   getMaxSubSum([-1, -2, -3]) = 0
 
  */
+
+if (0) {
+  function getMaxSubSum([...arr]) {
+    let maxSum = 0;
+    let currentMaximum = 0;
+
+    arr.forEach((number) => {
+      if (number > -number) {
+        currentMaximum += number;
+      }
+
+      if (number < -number) {
+        currentMaximum = 0;
+      }
+
+      if (maxSum <= currentMaximum) {
+        maxSum = currentMaximum;
+      }
+    });
+
+    console.log(maxSum);
+    return maxSum;
+  }
+}
+
+//*****************************************
+
+/*
+  Решение которое предлогает L JS
+  И как выяснил оно не правельное
+  ошибка проявляется только если вычитание из числа не привидёт к отрицателньому рещульятату
+  
+  1 - 2 // ошибки не будет
+  1 - 10 // ошибки не будет
+  10 - 5 // ошибка 
+  5 - 1 // ошибка 
+*/
+
+if (1) {
+  function getMaxSubSum(arr) {
+    let maxSum = 0;
+    let partialSum = 0;
+
+    for (let item of arr) {
+      console.log(`к числу ${partialSum} мы добовляем ${item}`);
+      partialSum += item;
+
+      maxSum = Math.max(maxSum, partialSum);
+
+      if (partialSum < 0) {
+        partialSum = 0;
+        console.log("очистка зачения");
+      }
+    }
+
+    console.log("на выходе", maxSum);
+    return maxSum;
+  }
+
+  getMaxSubSum([2, -1, 2]);
+}
+
+/*
+
+к числу 0 мы добовляем 2
+к числу 2 мы добовляем -1 // в этот момент мы добовляем отрицательное число (2 - 1 = 1)
+к числу 1 мы добовляем 2
+к числу 3 мы добовляем 3
+к числу 6 мы добовляем -9
+очистка зачения
+на выходе 6
+
+*/
