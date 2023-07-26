@@ -13,7 +13,7 @@
   Как правильно округлить 6.35?
 */
 
-  
+let ОТВЕТ = "это происходит из неточности подсчётов языка";
 
 /***********************************************/
 
@@ -43,6 +43,19 @@
   или нажав «Отмена». В этом случае функция должна вернуть null.
 */
 
+function readNumber() {
+  let number;
+
+  do {
+    number = prompt("В видите число");
+  } while (!isFinite(number));
+
+  if (number === null || number === "") return null;
+
+  return number === null || number === "" ? null : number;
+}
+alert(`Число: ${readNumber()}`);
+
 /***********************************************/
 
 /*
@@ -57,12 +70,4 @@
   alert( randomInteger(1, 5) ); // 3
   alert( randomInteger(1, 5) ); // 5
 */
-
-for (const key in object) {
-    if (Object.hasOwnProperty.call(object, key)) {
-        const element = object[key];
-        for (const iterator of object) {
-            
-        }
-    }
-}
+ 
