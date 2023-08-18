@@ -1,24 +1,22 @@
 function CreateОrder() {
-  const list = new Map();
-
-  this.lock = false;
-  this.list = list;
+  const orderList = new Map();
+  lock = false;
 
   this.addItem = function (item, count) {
-    if (this.lock) {
-      console.log("Изменение списака заблакированно");
-      return;
-    }
-
     let { name, unitPrice } = item;
     name = name.toLocaleLowerCase();
 
-    countValidation(count);
+    if (lock) {
+      console.log(
+        `"${Object.values(item).join(" - ")}": Изменение списка заблокированно `
+      );
+      return;
+    }
 
-    if (list.has(name)) {
-      const element = list.get(name);
+    if (orderList.has(name)) {
+      const element = orderList.get(name);
 
-      list.set(name, {
+      orderList.set(name, {
         unitPrice: element.unitPrice,
         count: element.count + count,
       });
@@ -29,39 +27,47 @@ function CreateОrder() {
       throw new Error("Ну указанно цена за штуку");
     }
 
-    if (!list.has(name)) {
-      list.set(name, { unitPrice, count });
+    if (!orderList.has(name)) {
+      orderList.set(name, { unitPrice, count });
     }
   };
 
-  this.removeItem = function (item, count = 0) {
-    if (this.lock) {
-      console.log("Изменение списака заблакированно");
+  this.removeItem = function (item, count = undefined) {
+    let { name, unitPrice } = item;
+    name = name.toLocaleLowerCase();
+
+    if (lock) {
+      console.log(
+        `"${Object.values(item).join(" - ")}": Изменение списка заблокированно `
+      );
       return;
     }
 
-    let { name, unitPrice } = item;
-    name = name.toLocaleLowerCase();
-    const element = list.get(name);
+    if (orderList.has(name)) {
+      const element = orderList.get(name);
 
-    if (element.count - count <= 0 || count == 0) {
-      list.delete(name);
+      if (element.count - count <= 0 || count == undefined) {
+        orderList.delete(name);
+      }
+    } else {
+      console.log(`Удаляемый элемент "${name}" отсутствует`);
       return;
     }
 
     countValidation(count);
 
-    if (list.has(name)) {
-      list.set(name, {
+    if (orderList.has(name)) {
+      orderList.set(name, {
         unitPrice: element.unitPrice,
         count: element.count - count,
       });
+      return;
     }
   };
 
   this.getCheck = function () {
     let totalPrice = 0;
-    list.forEach((element, key) => {
+    orderList.forEach((element, key) => {
       const a = element.unitPrice * element.count;
       totalPrice += a;
 
@@ -71,18 +77,21 @@ function CreateОrder() {
   };
 
   this.lockOrder = function () {
-    Object.defineProperty(this, "lock", {
-      value: false,
-    });
+    lock = !lock;
   };
+
   this.unlockOrder = function () {
-    Object.defineProperty(this, "lock", {
-      value: true,
-    });
+    lock = !lock;
   };
-  Object.defineProperty(this, "lock", {
-    writable: this.lock,
-  });
+
+  function errorLockedItem(lock, item) {
+    if (lock) {
+      console.log(
+        `"${Object.values(item).join(" - ")}": Изменение списка заблокированно `
+      );
+      return;
+    }
+  }
 
   function countValidation(count) {
     if (!count) {
@@ -109,12 +118,12 @@ user1.addItem({ name: "Вафля", unitPrice: 100 }, 1);
 user1.addItem({ name: "Вафля" }, 1);
 user1.addItem({ name: "пивО", unitPrice: 100 }, 1);
 user1.addItem({ name: "пиво", unitPrice: 100 }, 1);
-user1.removeItem({ name: "Вафля" }, 1);
+user1.removeItem({ name: "Привет" }, 1);
 
 user1.lockOrder();
-user1.addItem({ name: "Абоба чай", unitPrice: 100 }, 1);
-
+user1.addItem({ name: "Абоба чай", unitPrice: 100 }, 100000);
 user1.unlockOrder();
+
 user1.addItem({ name: "Абоба чай", unitPrice: 100 }, 1);
 
 user1.getCheck();
