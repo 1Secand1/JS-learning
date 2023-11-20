@@ -100,7 +100,7 @@ function CreateОrder() {
 
     if (!isFinite(count)) {
       throw new Error("Передано не числовое значение");
-    }
+    }ц
 
     if (count !== Math.floor(count)) {
       throw new Error("Передано не целое число");
