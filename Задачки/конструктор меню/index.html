@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="main.js"></script>
+    <script defer src="main.js"></script>
     <title>Document</title>
 </head>
 
@@ -12,16 +12,40 @@
     <div class="row">
 
         <section>
-
+            <ul>
+                <li>
+                    <input id="nameItem" type="text" placeholder="Название">
+                    <input id="unitСost" type="text" placeholder="Цена за штуку">
+                </li>
+                <li>
+                    <input id="quantity" type="text" placeholder="Количество">
+                </li>
+                <li>
+                    <br>
+                    <button id="add">Добавить</button>
+                    <button id="remove">Удолить</button>
+                </li>
+                <li>
+                    <button id="summarize">Подвести итоги</button>
+                </li>
+                <li>
+                    <br>
+                    <button id="lockOrder">Заблокировать редактирование</button>
+                    <button id="unlockOrder">
+                        Разблокировать редактирование
+                    </button>
+                </li>
+            </ul>
         </section>
 
         <section>
+            <ul id="check">
+            </ul>
 
         </section>
 
     </div>
 
 </body>
-
 
 </html>
