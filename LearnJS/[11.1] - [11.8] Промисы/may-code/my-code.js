@@ -25,6 +25,6 @@ function printUserList(userNames) {
   document.querySelector("body").appendChild(ul);
 
   ul = null;
-  userNamesList = null;
+  userNamesList = null
 }
 getUsers.then((userNames) => printUserList(userNames));
