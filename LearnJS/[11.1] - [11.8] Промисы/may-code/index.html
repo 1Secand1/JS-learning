@@ -9,7 +9,74 @@
 
 </head>
 
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    main {
+        max-width: 1200px;
+        width: 100%;
+        min-height: 100vh;
+
+        padding: 50px;
+
+        margin-inline: auto;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .post {
+        display: flex;
+        column-gap: 10px;
+        width: 100%;
+        
+    }
+    
+    .posts {
+        width: 100%;
+        display: grid;
+
+        margin-top: 25px;
+        gap: 20px;
+    }
+
+    .text-content {
+        width: 100%;
+        display: grid;
+    }
+
+    .img {
+        height: 100%;
+        max-height: 80px;
+    }
+
+    .user-list {
+        display: grid;
+
+        gap: 20px;
+    }
+</style>
+
 <body>
+
+    <main>
+
+
+        <button onclick="createUserList(userPosts,'content')">
+            Домой
+        </button>
+
+        <br><br>
+
+        <section id="content">
+
+
+        </section>
+
+    </main>
 
 </body>
 
