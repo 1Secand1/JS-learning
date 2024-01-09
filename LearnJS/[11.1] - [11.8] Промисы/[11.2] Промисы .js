@@ -6,10 +6,48 @@ if (0) {
  */
 
   function delay(ms) {
+    E;
     return new Promise((res, rej) => {
       setTimeout(() => res, ms);
     });
   }
 
   delay(3000).then(() => console.log("выполнилось через 3 секунды"));
+}
+
+if (1) {
+  const iCantGetRidOfPromise = () => {
+    console.log(0); // 1) выводит в консошль 0
+    setTimeout(() => console.log(1), 50);
+    setTimeout(console.log, 0, 2); // 5) выполняется по мере очереди
+
+    new Promise((resolve) => {
+      console.log(3); // 2) синхронная операция поэтому выводит сразу  0
+      setTimeout(() => resolve(4)); // 6) доедается очереди и выполняется
+    })
+      .then(console.log) // 5) выводит переданное выше значение в консоль
+      .then(() => console.log(5)) // 7) выводит значение в консоль
+      .catch(() => console.log(6)) // не срабатывает так как promise завершился удачно
+      .then(() => {
+        setTimeout(() => console.log(7)); // 9) выводит значение в консоль
+      });
+
+    setTimeout(() => {
+      // срабатывает так ак был добавлен в очередь раньше чем setTimeout на 31 строчке
+      console.log(8); // 8) выводит значение в консоль
+    });
+
+    Promise.reject(9) // статический метод создаёт завершенный promise c плохим исходом
+      .then(() => console.log(10))
+      .catch(console.log); // 4) так как исход плохой срабатывает catch и в колбек передаётся 9
+
+    console.log(11); // 3) синхронная операция
+  };
+
+  iCantGetRidOfPromise();
+  // мой ответ 0 3 8 9 10 11 2 1 4 5 7
+
+  // правельный ответ 0 3 11 9 2 4 5 8 7 1
+
+  // c setTimeout не совсем понятно :(
 }
