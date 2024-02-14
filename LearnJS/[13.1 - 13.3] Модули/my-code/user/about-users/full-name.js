@@ -1,0 +1,1 @@
+export const fullName = "Пупкин Евлампий Ивановичь";
